@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nova Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Iconițe (sprite SVG) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 7h12l1 13H5zM9 7a3 3 0 016 0"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0112 0c0 6 2 7 2 7H4s2-1 2-7M10 20a2 2 0 004 0"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M4 20h16"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7h15a1 1 0 011 1v11a1 1 0 01-1 1H5a1 1 0 01-1-1zM4 7l12-3v3M16 14h2"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0112 0M16 5a3.5 3.5 0 010 6M18 14a6 6 0 013 6"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 4H5a1 1 0 00-1 1v14a1 1 0 001 1h4M16 8l4 4-4 4M20 12H9"/></symbol>
+  </svg>
+
+  <div class="app" id="app">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar" id="sidebar" aria-label="Navigare principală">
+      <div class="brand">
+        <div class="brand-mark"><svg class="icon"><use href="#i-target"></use></svg></div>
+        <span>Nova</span>
+      </div>
+
+      <nav class="nav">
+        <span class="nav-indicator" id="navInd"></span>
+        <button class="nav-link" data-view="overview" type="button">
+          <svg class="icon"><use href="#i-home"></use></svg><span>Prezentare generală</span>
+        </button>
+        <button class="nav-link" data-view="orders" type="button">
+          <svg class="icon"><use href="#i-bag"></use></svg><span>Comenzi</span>
+        </button>
+        <button class="nav-link" data-view="tasks" type="button">
+          <svg class="icon"><use href="#i-check"></use></svg><span>Sarcini</span>
+        </button>
+        <button class="nav-link" data-view="settings" type="button">
+          <svg class="icon"><use href="#i-gear"></use></svg><span>Setări</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <button class="nav-link collapse-btn" id="collapseBtn" type="button">
+          <svg class="icon"><use href="#i-chev"></use></svg><span>Restrânge</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="overlay" id="overlay" hidden></div>
+
+    <div class="main">
+
+      <!-- ===== Bara de sus ===== -->
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Deschide meniul">
+          <svg class="icon"><use href="#i-menu"></use></svg>
+        </button>
+
+        <div class="search">
+          <svg class="icon"><use href="#i-search"></use></svg>
+          <input id="search" type="search" placeholder="Caută comenzi, clienți..." aria-label="Caută comenzi">
+        </div>
+
+        <div class="topbar-right">
+          <button class="icon-btn" id="themeBtn" type="button" aria-label="Schimbă tema">
+            <svg class="icon" id="themeIcon"><use href="#i-moon"></use></svg>
+          </button>
+
+          <div style="position:relative">
+            <button class="icon-btn" id="bellBtn" type="button" aria-label="Notificări">
+              <svg class="icon"><use href="#i-bell"></use></svg>
+              <span class="dot" id="bellDot"></span>
+            </button>
+            <div class="dropdown" id="notifPanel" hidden>
+              <div class="dropdown-head">
+                <span>Notificări</span>
+                <button class="link-btn" id="markRead" type="button">Marchează ca citite</button>
+              </div>
+              <div id="notifList"></div>
+            </div>
+          </div>
+
+          <div style="position:relative">
+            <button class="avatar" id="avatarBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Meniu profil">
+              <span id="avatar">A</span><i class="status online" id="statusDot"></i>
+            </button>
+
+            <div class="dropdown profile" id="profileMenu" role="menu" hidden>
+              <div class="pm-head">
+                <div class="avatar big"><span id="avatar2">A</span></div>
+                <div><b id="menuName">Alex</b><small>demo@nova.app</small></div>
+              </div>
+
+              <div class="pm-status" role="group" aria-label="Status">
+                <button type="button" data-status="online" aria-pressed="true"><i class="status online"></i>Disponibil</button>
+                <button type="button" data-status="busy" aria-pressed="false"><i class="status busy"></i>Ocupat</button>
+                <button type="button" data-status="away" aria-pressed="false"><i class="status away"></i>Plecat</button>
+              </div>
+
+              <button class="pm-item" role="menuitem" type="button" data-go="settings"><svg class="icon"><use href="#i-user"></use></svg>Profil și setări</button>
+              <button class="pm-item" role="menuitem" type="button" data-go="tasks"><svg class="icon"><use href="#i-check"></use></svg>Sarcinile mele</button>
+              <button class="pm-item" role="menuitem" type="button" id="pmTheme"><svg class="icon" id="pmThemeIcon"><use href="#i-moon"></use></svg><span id="pmThemeText">Temă întunecată</span></button>
+              <button class="pm-item only-desktop" role="menuitem" type="button" id="pmCollapse"><svg class="icon"><use href="#i-chev"></use></svg>Restrânge bara laterală</button>
+
+              <div class="pm-swatches">
+                <span>Culoare</span>
+                <div class="swatches">
+                  <button class="swatch" type="button" data-color="#5b5bf0" aria-label="Indigo" aria-pressed="false"></button>
+                  <button class="swatch" type="button" data-color="#e11d74" aria-label="Roz" aria-pressed="false"></button>
+                  <button class="swatch" type="button" data-color="#0891b2" aria-label="Turcoaz" aria-pressed="false"></button>
+                  <button class="swatch" type="button" data-color="#16a34a" aria-label="Verde" aria-pressed="false"></button>
+                  <button class="swatch" type="button" data-color="#ea580c" aria-label="Portocaliu" aria-pressed="false"></button>
+                </div>
+              </div>
+
+              <button class="pm-item danger" role="menuitem" type="button" id="pmLogout"><svg class="icon"><use href="#i-logout"></use></svg>Deconectare</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <!-- ===== Prezentare generală ===== -->
+        <section class="view" id="view-overview">
+          <div class="page-head" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px">
+            <div>
+              <h2 id="hello">Bună!</h2>
+              <p id="today"></p>
+            </div>
+            <div class="segmented" role="group" aria-label="Perioadă">
+              <button type="button" data-range="7" aria-pressed="false">7 zile</button>
+              <button type="button" data-range="30" aria-pressed="true">30 zile</button>
+              <button type="button" data-range="90" aria-pressed="false">90 zile</button>
+            </div>
+          </div>
+
+          <div class="stats" id="stats"></div>
+
+          <div class="grid-2">
+            <article class="card">
+              <div class="card-head"><h3>Venituri</h3></div>
+              <div class="chart-wrap">
+                <canvas id="chart" role="img" aria-label="Grafic cu veniturile zilnice"></canvas>
+                <div class="tip" id="tip" hidden></div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head"><h3>Surse de trafic</h3></div>
+              <div id="sources"></div>
+            </article>
+          </div>
+
+          <article class="card" style="margin-top:20px">
+            <div class="card-head"><h3>Activitate recentă</h3></div>
+            <ul class="feed" id="feed"></ul>
+          </article>
+        </section>
+
+        <!-- ===== Comenzi ===== -->
+        <section class="view" id="view-orders" hidden>
+          <div class="page-head">
+            <h2>Comenzi</h2>
+            <p>Caută, filtrează, sortează după coloane și schimbă statusul cu un click.</p>
+          </div>
+
+          <article class="card">
+            <div class="toolbar">
+              <input class="field" id="q" type="search" placeholder="Caută..." aria-label="Caută în comenzi" style="flex:1;min-width:160px">
+              <select class="field" id="statusFilter" aria-label="Filtrează după status">
+                <option value="all">Toate statusurile</option>
+                <option>Livrată</option>
+                <option>În procesare</option>
+                <option>Anulată</option>
+              </select>
+              <button class="btn ghost" id="exportBtn" type="button">
+                <svg class="icon"><use href="#i-download"></use></svg>Exportă CSV
+              </button>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead><tr id="thr"></tr></thead>
+                <tbody id="tbody"></tbody>
+              </table>
+            </div>
+
+            <div class="pager">
+              <span id="pageInfo"></span>
+              <div>
+                <button class="btn ghost" id="prev" type="button">Înapoi</button>
+                <button class="btn ghost" id="next" type="button">Înainte</button>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- ===== Sarcini ===== -->
+        <section class="view" id="view-tasks" hidden>
+          <div class="page-head">
+            <h2>Sarcini</h2>
+            <p>Se salvează automat în browser.</p>
+          </div>
+
+          <article class="card">
+            <form class="task-form" id="taskForm">
+              <input class="field" id="taskText" type="text" placeholder="Ce ai de făcut?" aria-label="Sarcină nouă" maxlength="120">
+              <select class="field" id="taskPrio" aria-label="Prioritate">
+                <option value="normal">Normal</option>
+                <option value="high">Urgent</option>
+              </select>
+              <button class="btn" type="submit"><svg class="icon"><use href="#i-plus"></use></svg>Adaugă</button>
+            </form>
+
+            <div class="segmented" role="group" aria-label="Filtru sarcini">
+              <button type="button" data-filter="all" aria-pressed="true">Toate</button>
+              <button type="button" data-filter="open" aria-pressed="false">Active</button>
+              <button type="button" data-filter="done" aria-pressed="false">Terminate</button>
+            </div>
+
+            <ul class="tasks" id="tasks"></ul>
+            <p id="taskCount" style="margin-top:14px;color:var(--muted)"></p>
+          </article>
+        </section>
+
+        <!-- ===== Setări ===== -->
+        <section class="view" id="view-settings" hidden>
+          <div class="page-head">
+            <h2>Setări</h2>
+            <p>Personalizează aspectul și profilul.</p>
+          </div>
+
+          <article class="card settings">
+            <div class="setting">
+              <label for="nameInput">Numele tău</label>
+              <input class="field" id="nameInput" type="text" maxlength="30">
+            </div>
+
+            <div class="setting">
+              <label>Culoare principală</label>
+              <div class="swatches">
+                <button class="swatch" type="button" data-color="#5b5bf0" aria-label="Indigo" aria-pressed="false"></button>
+                <button class="swatch" type="button" data-color="#e11d74" aria-label="Roz" aria-pressed="false"></button>
+                <button class="swatch" type="button" data-color="#0891b2" aria-label="Turcoaz" aria-pressed="false"></button>
+                <button class="swatch" type="button" data-color="#16a34a" aria-label="Verde" aria-pressed="false"></button>
+                <button class="swatch" type="button" data-color="#ea580c" aria-label="Portocaliu" aria-pressed="false"></button>
+              </div>
+            </div>
+
+            <div class="setting">
+              <label for="themeSelect">Temă</label>
+              <select class="field" id="themeSelect">
+                <option value="auto">Automat (după sistem)</option>
+                <option value="light">Luminoasă</option>
+                <option value="dark">Întunecată</option>
+              </select>
+            </div>
+
+            <div class="setting">
+              <label>Date</label>
+              <div><button class="btn danger" id="resetBtn" type="button">Resetează tot</button></div>
+            </div>
+          </article>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="nprog" id="nprog"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
